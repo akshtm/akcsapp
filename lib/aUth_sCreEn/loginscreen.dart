@@ -1,6 +1,8 @@
 import 'dart:developer';
 
-import 'package:akcsapp/uSer_Data/usER_dAta.dart';
+import 'package:akcsapp/scReens/dashboard.dart';
+import 'package:akcsapp/uSer_Data/constants.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
@@ -52,9 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
         // box.write('UserContact', phoneController.text);
         // box.write('UserTyp', 'user');
-
+        box.write('user', 'true');
+        box.write('userphone', phoneController.text);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => usEr_dAta()));
+            context, MaterialPageRoute(builder: (context) => dashboard()));
       }
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -172,29 +175,22 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Spacer(),
         getlogiphonnwidget(context),
-        Pinput(
-          length: 5,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          defaultPinTheme: PinTheme(
-            width: 56,
-            height: 56,
-            textStyle: TextStyle(
-                fontSize: 20,
-                color: Color.fromRGBO(30, 60, 87, 1),
-                fontWeight: FontWeight.w600),
-            decoration: BoxDecoration(
-              border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-
-          androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
-          // onCompleted: (pin) => Get.to(usEr_dAta()),
-          //  log(pin),
-          validator: (s) {
-            return s == '2222' ? null : 'Pin is incorrect';
-          },
+        TextField(
+          keyboardType: TextInputType.number,
+          controller: otpController,
+          decoration: InputDecoration(
+              // errorText: fx.errorText.value,
+              errorStyle: TextStyle(
+                  fontSize: 15, color: Color.fromARGB(255, 240, 98, 98)),
+              // hintText: "Mobile",
+              prefixText: '  +91',
+              prefixIcon: Icon(Icons.call),
+              filled: true,
+              fillColor: Colors.blue.shade100,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              )),
         ),
         SizedBox(
           height: 16,
@@ -204,7 +200,8 @@ class _LoginScreenState extends State<LoginScreen> {
             log("pin print inside the elevated button" + pin.toString());
             PhoneAuthCredential phoneAuthCredential =
                 PhoneAuthProvider.credential(
-                    verificationId: verificationId, smsCode: pin.toString());
+                    verificationId: verificationId,
+                    smsCode: otpController.text);
 
             signInWithPhoneAuthCredential(phoneAuthCredential);
           },

@@ -40,6 +40,13 @@ dependencies:
   cloud_firestore: ^3.5.1
   fluttertoast: ^8.1.1
   pinput: ^2.2.16
+  get_storage: ^2.0.3
+  carousel_slider: ^4.2.0
+  url_launcher: ^6.1.7
+  youtube_player_flutter: ^8.1.1
+  whatsapp_unilink: ^2.1.0
+  shimmer: ^2.0.0
+  badges: ^2.0.3
 
 
 
