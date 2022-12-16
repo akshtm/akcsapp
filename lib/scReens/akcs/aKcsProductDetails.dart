@@ -1,21 +1,46 @@
+// import 'dart:developer';
+// import 'dart:ffi';
+
 import 'dart:developer';
 
+import 'package:akcsapp/Controllers_Getx/cartcontroller.dart';
+import 'package:akcsapp/Models/cartModel.dart';
+import 'package:akcsapp/scReens/akcs/cart.dart';
 import 'package:akcsapp/widgets/appbar.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class aKcsProductDetails extends StatelessWidget {
-  String productid, image, description, price, productname, offprice;
-  aKcsProductDetails(
-      {required this.description,
-      required this.image,
-      required this.price,
-      required this.productid,
-      required this.productname,
-      required this.offprice});
+  String image, description, productname, productid;
+  double? price, liveprice, pricechange;
 
+  // int? price;
+  aKcsProductDetails({
+    required this.description,
+    required this.image,
+    required this.liveprice,
+    required this.productid,
+    required this.productname,
+    required this.price,
+    required this.pricechange,
+    // required this.offprice
+  });
+  static const colorizeColors = [
+    Colors.grey,
+    Colors.blue,
+    Colors.yellow,
+    Colors.red,
+  ];
+
+  static const colorizeTextStyle = TextStyle(
+    fontSize: 15.0,
+    fontFamily: 'Horizon',
+  );
+  CArtControLler cArtControLler = Get.put(CArtControLler());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,72 +66,60 @@ class aKcsProductDetails extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 70, left: 30),
+                  padding: EdgeInsets.only(top: 50, left: 30),
                   child: Text(
-                    //'shoes'
                     productname,
-
                     style: TextStyle(
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic),
                   )),
-
+              Visibility(
+                visible: price! > liveprice!,
+                child: Padding(
+                    padding: EdgeInsets.only(left: 30, top: 100),
+                    child: Text(
+                      '₹${price}',
+                      style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic),
+                    )),
+              ),
               Padding(
-                  padding: EdgeInsets.only(left: 30, top: 120),
+                  padding: EdgeInsets.only(left: 30, top: 135),
                   child: Text(
-                    '₹${price}',
+                    '₹${liveprice.toString()}',
                     style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic),
                   )),
               Padding(
-                  padding: EdgeInsets.only(left: 30, top: 155),
-                  child: Text(
-                    '₹${offprice}',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic),
+                  padding: EdgeInsets.only(left: 30, top: 175),
+                  child: Visibility(
+                    visible: liveprice! < price!,
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        ColorizeAnimatedText(
+                          'You can now save ₹' + pricechange.toString(),
+                          textStyle: colorizeTextStyle,
+                          colors: colorizeColors,
+                        ),
+                      ],
+                      isRepeatingAnimation: true,
+                      totalRepeatCount: 500000,
+                    ),
+
+                    // Text(
+                    //   'You can now save ₹' + pricechange.toString(),
+                    //   style: TextStyle(
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontStyle: FontStyle.italic),
+                    // ),
                   )),
-              // Consumer<Wishlist>(builder: (context, wishlist, child) {
-              //   return Padding(
-              //     padding: const EdgeInsets.only(left: 30, top: 250),
-              //     child: IconButton(
-              //       icon: wishlist.isItemExist(widget.productId)
-              //           ? Icon(Icons.favorite, color: Colors.red)
-              //           : Icon(Icons.favorite, color: Colors.grey),
-              //       iconSize: 35,
-              //       onPressed: () {
-              //         setState(() {
-              //           log("clicked ===");
-              //           if (wishlist.isItemExist(widget.productId)) {
-              //             ScaffoldMessenger.of(context).showSnackBar(
-              //               SnackBar(
-              //                 duration: Duration(milliseconds: 30),
-              //                 behavior: SnackBarBehavior.floating,
-              //                 backgroundColor: Color.fromARGB(255, 174, 166, 166),
-              //                 content: Text(
-              //                   'ITEM  ALREADY IN WISHLIST',
-              //                   textAlign: TextAlign.center,
-              //                 ),
-              //               ),
-              //             );
-
-              //             log("item already in WISHLIST");
-              //           } else {
-              //             context.read<Wishlist>().addItem(widget.name,
-              //                 widget.price, 1, widget.image1, widget.productId);
-              //           }
-              //         });
-
-              //         // context.read<Wishlist>().addItem(widget.name,widget.price, 1, widget.image1,widget.productId);
-              //       },
-              //     ),
-              //   );
-              // }),
               Padding(
                   padding: EdgeInsets.only(left: 10, top: 340),
                   child: Text(
@@ -117,7 +130,6 @@ class aKcsProductDetails extends StatelessWidget {
                         // fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
                   )),
-
               Padding(
                   padding: EdgeInsets.only(top: 390, left: 10),
                   child: Text(
@@ -165,42 +177,45 @@ class aKcsProductDetails extends StatelessWidget {
           ),
           height: 100,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 30.0),
                 child: Container(
-                  //padding: const EdgeInsets.only(left: 20),
-                  // margin: EdgeInsets.only(right: 50),
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.white,
+                    //padding: const EdgeInsets.only(left: 20),
+                    // margin: EdgeInsets.only(right: 50),
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  child: Badge(
-                    //position: BadgePosition.bottomStart(),
-                    animationDuration: Duration(milliseconds: 300),
+                    child: Obx(
+                      () => Badge(
+                        //position: BadgePosition.bottomStart(),
+                        animationDuration: Duration(milliseconds: 300),
 
-                    animationType: BadgeAnimationType.slide,
+                        animationType: BadgeAnimationType.slide,
 
-                    badgeContent: Text(
-                      '2',
-                      //cart.count.toString(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    child: IconButton(
-                        icon: Icon(Icons.shopping_cart),
-                        iconSize: 34,
-                        onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => mycart()));
-                        }),
-                  ),
-                ),
+                        badgeContent: Text(
+                          cArtControLler.cartProducts.length.toString(),
+                          //cart.count.toString(),
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        child: IconButton(
+                            icon: Icon(Icons.shopping_cart),
+                            iconSize: 34,
+                            onPressed: () {
+                              Get.to(cart());
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => mycart()));
+                            }),
+                      ),
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 100, right: 10),
@@ -208,42 +223,34 @@ class aKcsProductDetails extends StatelessWidget {
                   height: 50,
                   width: 140,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(),
-                    //color: product.color,
-                    onPressed: () {
-                      //  log("name=====" + widget.productId);
-
-                      //   if (cart.isItemExist(widget.productId)) {
-                      //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      //         duration: Duration(milliseconds: 30),
-                      //         behavior: SnackBarBehavior.floating,
-                      //         backgroundColor:
-                      //             Color.fromARGB(255, 174, 166, 166),
-                      //         content: Text(
-                      //           'ITEM ALREADY IN CART',
-                      //           textAlign: TextAlign.center,
-                      //         )));
-
-                      //     log("item already in cart");
-                      //   } else {
-                      //     context.read<Cart>().addItem(widget.name,
-                      //         widget.price, 1, widget.image1, widget.productId);
-                      //   }
-
-                      //   log("message");
-                      // },
-                      child:
-                      Text(
+                      style: ElevatedButton.styleFrom(
+                        primary:
+                            Color.fromARGB(255, 17, 119, 147), // background
+                        onPrimary: Colors.white,
+                      ),
+                      onPressed: () {
+                        log('CArt');
+                        log(productname);
+                        log(image);
+                        log(liveprice.toString());
+                        log('productId' + productid.toString());
+                        CartMOdel cartMOdelAdd = CartMOdel(
+                            name: productname,
+                            image: image,
+                            price: liveprice,
+                            qty: 1,
+                            product_id: productid,
+                            total: liveprice);
+                        cArtControLler.addProduct(cartMOdelAdd);
+                      },
+                      child: Text(
                         "ADD CART ".toUpperCase(),
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
-                      );
-                    },
-                    child: Text('ADD'),
-                  ),
+                      )),
                 ),
               ),
             ],

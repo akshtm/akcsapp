@@ -42,11 +42,11 @@ class SplashScreen extends StatelessWidget {
                                 fontSize: controller.animation.value * 150,
                               )),
                           TextSpan(
-                              //text: '               AREEKODE CHIKKEN STALL\n ',
+                              text: '               AREEKODE CHIKKEN STALL\n ',
                               style: TextStyle(
-                            color: Color.fromARGB(255, 216, 223, 14),
-                            fontSize: controller.animation.value * 15,
-                          )),
+                                color: Color.fromARGB(255, 216, 223, 14),
+                                fontSize: controller.animation.value * 15,
+                              )),
                           TextSpan(
                               text: 'CS ',
                               style: TextStyle(

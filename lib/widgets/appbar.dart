@@ -1,9 +1,13 @@
+import 'package:akcsapp/Controllers_Getx/cartcontroller.dart';
+import 'package:akcsapp/scReens/akcs/cart.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class appbarakcs extends StatelessWidget {
+  CArtControLler cArtControLler = Get.put(CArtControLler());
   var size, height, width;
   @override
   Widget build(BuildContext context) {
@@ -16,19 +20,23 @@ class appbarakcs extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {}, icon: Icon(Icons.notifications_active)),
-              Badge(
-                position: BadgePosition.topEnd(end: 0),
-                animationDuration: Duration(milliseconds: 300),
-                animationType: BadgeAnimationType.slide,
-                badgeContent: Text(
-                  '2',
-                  //cart.count.toString(),
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+              Obx(
+                () => Badge(
+                  position: BadgePosition.topEnd(end: 0),
+                  animationDuration: Duration(milliseconds: 300),
+                  animationType: BadgeAnimationType.slide,
+                  badgeContent: Text(
+                    cArtControLler.cartProducts.length.toString(),
+                    //cart.count.toString(),
+                    style: TextStyle(color: Colors.black, fontSize: 10),
+                  ),
+                  child: IconButton(
+                      onPressed: () {
+                        Get.to(cart());
+                      },
+                      icon: Icon(Icons.local_grocery_store_outlined)),
                 ),
-                child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.local_grocery_store_outlined)),
-              ),
+              )
             ],
           )
         ],
