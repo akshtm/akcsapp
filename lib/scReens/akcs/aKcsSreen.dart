@@ -14,6 +14,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AKcsScreen extends StatelessWidget {
   AKcsScreen({Key? key}) : super(key: key);
@@ -194,7 +195,10 @@ class AKcsScreen extends StatelessWidget {
                   SizedBox(
                     height: 6,
                   ),
-                  Text(txt),
+                  Text(
+                    txt,
+                    style: GoogleFonts.sourceSansPro(),
+                  ),
                 ],
               );
             }),
@@ -548,12 +552,13 @@ class AKcsScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   data.docs[index]['product_name'],
+
                                   // style: TextStyle(
                                   //   fontSize: 16,
 
                                   // ),
 
-                                  style: TextStyle(
+                                  style: GoogleFonts.aBeeZee(
                                       shadows: [
                                         Shadow(
                                             color: Colors.black,
@@ -644,7 +649,7 @@ class AKcsScreen extends StatelessWidget {
 
                                   // ),
 
-                                  style: TextStyle(
+                                  style: GoogleFonts.aBeeZee(
                                       shadows: [
                                         Shadow(
                                             color: Colors.black,

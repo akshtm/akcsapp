@@ -19,7 +19,7 @@ Future<void> main() async {
   }
   ADressController aDressController = Get.put(ADressController());
 
-  aDressController.refresh();
+  aDressController.refreshAdress();
 
   runApp(const MyApp());
 }

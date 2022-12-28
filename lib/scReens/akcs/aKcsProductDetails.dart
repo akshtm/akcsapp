@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class aKcsProductDetails extends StatelessWidget {
   String image, description, productname, productid;
@@ -185,7 +186,7 @@ class aKcsProductDetails extends StatelessWidget {
                   child: Text(
                     //'shoeaaa'
                     productname,
-                    style: TextStyle(
+                    style: GoogleFonts.aBeeZee(
                         fontSize: 30,
                         // fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
@@ -195,10 +196,7 @@ class aKcsProductDetails extends StatelessWidget {
                   child: Text(
                     // 'available',
                     description,
-                    style: TextStyle(
-                        fontSize: 24,
-                        // fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic),
+                    style: GoogleFonts.nunito(fontSize: 20),
                   )),
               Align(
                 alignment: Alignment.topRight,

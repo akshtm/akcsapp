@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:akcsapp/Controllers_Getx/adressController.dart';
 import 'package:akcsapp/Controllers_Getx/cartcontroller.dart';
+import 'package:akcsapp/Models/Adress/AdressModel.dart';
 import 'package:akcsapp/scReens/Manageadress.dart';
+import 'package:akcsapp/scReens/akcs/adressSelection.dart';
 import 'package:akcsapp/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -23,11 +25,13 @@ class cart extends StatefulWidget {
 
 class _cartState extends State<cart> {
   CArtControLler _CArtController = Get.put(CArtControLler());
+  ADressController aDressController = Get.put(ADressController());
 
   var size, height, width;
 
   @override
   Widget build(BuildContext context) {
+    aDressController.refreshAdress();
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
@@ -254,14 +258,17 @@ class _cartState extends State<cart> {
                         style: ButtonStyle(
                             foregroundColor:
                                 MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.red),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromARGB(255, 17, 119, 147),
+                            ),
                             shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero,
-                                    side: BorderSide(color: Colors.red)))),
-                        onPressed: () {},
+                                    side: BorderSide(color: Colors.grey)))),
+                        onPressed: () {
+                          Get.to(() => Manageadress());
+                        },
                         icon: Icon(Icons.add),
                         label: Text('ADD ADRESS')),
                     // confirmTextColor: Colors.black,
@@ -270,9 +277,9 @@ class _cartState extends State<cart> {
                     //   Get.to(() => Manageadress());
                     // }
                   );
+                } else {
+                  Get.to(adREssSelectIOn());
                 }
-                //if(adressListNotifier.value.length==null){}
-                //  _CArtController.total.value = 0;
               },
               child: Container(
                 width: width / 1.2,
