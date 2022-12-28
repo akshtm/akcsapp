@@ -48,6 +48,11 @@ dependencies:
   shimmer: ^2.0.0
   badges: ^2.0.3
   animated_text_kit: ^4.2.2
+  hive_flutter: ^1.1.0
+  flutter_slidable: ^1.2.0
+  google_fonts: ^3.0.1
+  geolocator: ^7.0.1
+  geocoding: ^2.0.0
 
 
 
@@ -55,6 +60,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^2.0.0  
+  build_runner: ^2.3.3 
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

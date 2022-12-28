@@ -5,6 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class Dashcontroller extends GetxController {
+  RxInt selectdIntx = 1.obs;
+  RxDouble selectdkg = 0.0.obs;
   makingphonecall() async {
     log('inside  _makingphonecall');
     var url = Uri.parse('tel:9539146521');

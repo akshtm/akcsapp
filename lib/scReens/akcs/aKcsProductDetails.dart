@@ -4,6 +4,7 @@
 import 'dart:developer';
 
 import 'package:akcsapp/Controllers_Getx/cartcontroller.dart';
+import 'package:akcsapp/Controllers_Getx/dashcontroller.dart';
 import 'package:akcsapp/Models/cartModel.dart';
 import 'package:akcsapp/scReens/akcs/cart.dart';
 import 'package:akcsapp/widgets/appbar.dart';
@@ -17,6 +18,8 @@ import 'package:get/get.dart';
 class aKcsProductDetails extends StatelessWidget {
   String image, description, productname, productid;
   double? price, liveprice, pricechange;
+  List<double> kg = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0];
+  //int? selectdIntx;
 
   // int? price;
   aKcsProductDetails({
@@ -41,6 +44,7 @@ class aKcsProductDetails extends StatelessWidget {
     fontFamily: 'Horizon',
   );
   CArtControLler cArtControLler = Get.put(CArtControLler());
+  Dashcontroller dashcontroller = Get.put(Dashcontroller());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,6 +124,62 @@ class aKcsProductDetails extends StatelessWidget {
                     //       fontStyle: FontStyle.italic),
                     // ),
                   )),
+              Padding(
+                  padding: EdgeInsets.only(left: 5, top: 260),
+                  child: Container(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      height: 75,
+                      child: SizedBox(
+                        height: 50,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            padding: EdgeInsets.fromLTRB(20, 7, 0, 0),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (
+                              BuildContext,
+                              intx,
+                            ) {
+                              return Obx(() => InkWell(
+                                    onTap: () {
+                                      log(kg[intx].toString());
+                                      log(intx.toString());
+                                      dashcontroller.selectdkg.value = kg[intx];
+                                      dashcontroller.selectdIntx.value = intx;
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: dashcontroller
+                                                      .selectdIntx.value ==
+                                                  intx
+                                              ? Color.fromARGB(
+                                                  255, 17, 119, 147)
+                                              : Colors.white,
+                                          border: Border.all(width: 0.15),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              kg[intx].toString() + "KG",
+                                              style: TextStyle(
+                                                  color: dashcontroller
+                                                              .selectdIntx
+                                                              .value ==
+                                                          intx
+                                                      ? Colors.white
+                                                      : Colors.black),
+                                            )),
+                                        height: 30,
+                                        width: 60,
+                                      ),
+                                    ),
+                                  ));
+                            },
+                            itemCount: kg.length),
+                      ))),
               Padding(
                   padding: EdgeInsets.only(left: 10, top: 340),
                   child: Text(
@@ -220,38 +280,57 @@ class aKcsProductDetails extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 100, right: 10),
                 child: Container(
-                  height: 50,
-                  width: 140,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary:
-                            Color.fromARGB(255, 17, 119, 147), // background
-                        onPrimary: Colors.white,
-                      ),
-                      onPressed: () {
-                        log('CArt');
-                        log(productname);
-                        log(image);
-                        log(liveprice.toString());
-                        log('productId' + productid.toString());
-                        CartMOdel cartMOdelAdd = CartMOdel(
-                            name: productname,
-                            image: image,
-                            price: liveprice,
-                            qty: 1,
-                            product_id: productid,
-                            total: liveprice);
-                        cArtControLler.addProduct(cartMOdelAdd);
-                      },
-                      child: Text(
-                        "ADD CART ".toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                    height: 50,
+                    width: 140,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary:
+                              Color.fromARGB(255, 17, 119, 147), // background
+                          onPrimary: Colors.white,
                         ),
-                      )),
-                ),
+                        onPressed: () {
+                          log('CArt');
+                          if (dashcontroller.selectdkg.value == 0.0) {
+                            Get.defaultDialog(
+                                title: 'Warning',
+                                middleText: 'Please  Select Quantity',
+                                // onConfirm: () {
+                                //   Navigator.of(context).pop();
+                                // },
+                                confirm: TextButton(
+                                    style: TextButton.styleFrom(
+                                      primary:
+                                          Color.fromARGB(255, 17, 119, 147),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK')));
+                          } else {
+                            log(productname);
+                            log(image);
+
+                            log('productId' + productid.toString());
+                            log(dashcontroller.selectdkg.value.toString());
+                            CartMOdel cartMOdelAdd = CartMOdel(
+                                name: productname,
+                                image: image,
+                                price: liveprice,
+                                qty: dashcontroller.selectdkg.value,
+                                product_id: productid,
+                                total: liveprice! *
+                                    dashcontroller.selectdkg.value);
+                            cArtControLler.addProduct(cartMOdelAdd);
+                          }
+                        },
+                        child: Text(
+                          "ADD CART ".toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ))),
               ),
             ],
           ),

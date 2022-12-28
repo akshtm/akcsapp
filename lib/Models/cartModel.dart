@@ -1,6 +1,6 @@
 class CartMOdel {
   late String name, image, product_id;
-  late int qty;
+  double? qty;
   double? total;
   double? price;
 

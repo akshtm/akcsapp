@@ -18,7 +18,7 @@ class ADressController extends GetxController {
   final StreetTextControl = TextEditingController();
   final PhoneTextControl = TextEditingController();
   final pincodeTextControl = TextEditingController();
-  final DistrictTextControl = TextEditingController();
+  final CItyTextControl = TextEditingController();
   final stateTextControl = TextEditingController();
 
   Future<void> addAdress_DB(AdressModel AdresAdd) async {
@@ -67,7 +67,12 @@ class ADressController extends GetxController {
       Placemark place = listPlaceMarks[0];
 
       currentLocationAddress =
-          "${place.locality}, ${place.postalCode}, ${place.subLocality}";
+          "${place.locality}, ${place.postalCode}, ${place.subLocality},${place.administrativeArea},${place.thoroughfare},${place.name}";
+      HomeNAMeTextControl.text = place.name!;
+      StreetTextControl.text = place.subLocality!;
+      stateTextControl.text = place.administrativeArea!;
+      pincodeTextControl.text = place.postalCode!;
+      CItyTextControl.text = place.locality!;
     } catch (e) {
       print(e);
     }

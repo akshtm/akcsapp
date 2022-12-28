@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:akcsapp/Controllers_Getx/dashcontroller.dart';
 import 'package:akcsapp/Models/cartModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class CArtControLler extends GetxController {
   var cartProducts = [].obs;
-  Rx<double> total = 0.0.obs;
+  Rx<double> Grandtotal = 0.0.obs;
+  Dashcontroller dashcontroller = Get.put(Dashcontroller());
 
   addProduct(CartMOdel model) {
     var contain =
@@ -26,29 +28,38 @@ class CArtControLler extends GetxController {
       cartProducts.add(model);
     }
 
-    total = total + double.parse(model.price.toString());
+    Grandtotal = Grandtotal + double.parse(model.total.toString());
+
+    // double.parse(model.qty.toString())
   }
 
   remove(int index) {
-    total = total - cartProducts[index].total;
+    Grandtotal = Grandtotal - cartProducts[index].total;
     cartProducts.removeAt(index);
-    log(total.toString());
+    log(Grandtotal.toString());
   }
 
   increment(int index) async {
-    cartProducts[index].qty++;
+    cartProducts[index].qty = cartProducts[index].qty + 0.5;
     cartProducts[index].total = cartProducts[index].price;
     cartProducts[index].total =
         cartProducts[index].price * cartProducts[index].qty;
+    log(cartProducts[index].price.toString());
+    double temptot = cartProducts[index].price / 2;
 
-    total = (total + cartProducts[index].price);
+    log(temptot.toString());
+    Grandtotal = (Grandtotal + temptot);
+    temptot = 0;
   }
 
   decrement(int index) async {
-    cartProducts[index].qty--;
+    cartProducts[index].qty = cartProducts[index].qty - 0.5;
 
     cartProducts[index].total =
         cartProducts[index].price * cartProducts[index].qty;
-    total = (total - cartProducts[index].price);
+    double temptot = cartProducts[index].price / 2;
+    Grandtotal = (Grandtotal - temptot);
+    log(temptot.toString());
+    temptot = 0;
   }
 }

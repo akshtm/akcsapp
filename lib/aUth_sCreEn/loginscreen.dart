@@ -183,8 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
               errorStyle: TextStyle(
                   fontSize: 15, color: Color.fromARGB(255, 240, 98, 98)),
               // hintText: "Mobile",
-              prefixText: '  +91',
-              prefixIcon: Icon(Icons.call),
+
               filled: true,
               fillColor: Colors.blue.shade100,
               border: OutlineInputBorder(

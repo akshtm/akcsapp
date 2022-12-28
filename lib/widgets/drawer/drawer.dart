@@ -1,3 +1,4 @@
+import 'package:akcsapp/scReens/Manageadress.dart';
 import 'package:akcsapp/scReens/akcs/aKcsProductDetails.dart';
 import 'package:akcsapp/uSer_Data/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,6 +41,26 @@ class drawer extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
             onTap: () {},
+          ),
+          Divider(
+            thickness: 0.5,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.add_home_work_sharp,
+              size: 35,
+              color: Colors.green,
+            ),
+            title: Text(
+              'Manage Adress',
+              style: TextStyle(fontSize: 20),
+            ),
+            onTap: () {
+              Get.to(Manageadress());
+            },
           ),
           Divider(
             thickness: 0.5,
