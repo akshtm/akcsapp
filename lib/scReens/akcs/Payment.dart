@@ -68,38 +68,29 @@ class lottiePaymentPage extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-              child: SizedBox(
+          SizedBox(
             height: 100,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Colors.red,
-                child: ListView.separated(
-                    itemBuilder: (BuildContext, index) {
-                      final items = _cArtControLler.cartProducts[index];
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(items.name),
-                          Text('X'),
-                          Text(items.qty.toString() + 'KG'),
-                          Text('='),
-                          Text(items.total.toString())
-                        ],
-                      );
+            child: Container(
+              //color: Colors.red,
+              child: ListView.builder(
+                  itemBuilder: (BuildContext, index) {
+                    final items = _cArtControLler.cartProducts[index];
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(items.name),
+                        Text('X'),
+                        Text(items.qty.toString() + 'KG'),
+                        Text('='),
+                        Text(items.total.toString())
+                      ],
+                    );
 
-                      //ListTile(title: Text(items.name));
-                    },
-                    separatorBuilder: (BuildContext, int) {
-                      return Divider(
-                        thickness: 1,
-                      );
-                    },
-                    itemCount: _cArtControLler.cartProducts.length),
-              ),
+                    //ListTile(title: Text(items.name));
+                  },
+                  itemCount: _cArtControLler.cartProducts.length),
             ),
-          ))
+          ),
         ],
       ),
     );
