@@ -65,11 +65,11 @@ class adREssSelectIOn extends StatelessWidget {
                               _checkOutController.selectdIntx.value = index;
                               _checkOutController.adress.value =
                                   addrs.HomeNAme +
-                                      '\n' +
+                                      ',' +
                                       addrs.Street +
                                       '\n' +
                                       addrs.District +
-                                      '\n' +
+                                      ',' +
                                       addrs.Pincode +
                                       '\n' +
                                       addrs.Phone;

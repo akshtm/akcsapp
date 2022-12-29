@@ -40,7 +40,8 @@ class appbarakcs extends StatelessWidget {
             ],
           )
         ],
-        backgroundColor: Color.fromARGB(255, 17, 119, 147),
+        
+       backgroundColor: Color.fromARGB(255, 17, 119, 147),
         title: Container(
           child: Column(
             children: [
