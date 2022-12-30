@@ -79,10 +79,10 @@ class lottiePaymentPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(items.name),
-                        Text('X'),
+                        Text(''),
                         Text(items.qty.toString() + 'KG'),
                         Text('='),
-                        Text(items.total.toString())
+                        Text("₹" + items.total.toString())
                       ],
                     );
 

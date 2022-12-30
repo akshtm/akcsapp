@@ -26,9 +26,8 @@ class CArtControLler extends GetxController {
           ));
     } else {
       cartProducts.add(model);
+      Grandtotal = Grandtotal + double.parse(model.total.toString());
     }
-
-    Grandtotal = Grandtotal + double.parse(model.total.toString());
 
     // double.parse(model.qty.toString())
   }

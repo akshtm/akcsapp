@@ -7,6 +7,7 @@ import 'package:akcsapp/Controllers_Getx/cartcontroller.dart';
 import 'package:akcsapp/Controllers_Getx/dashcontroller.dart';
 import 'package:akcsapp/Models/cartModel.dart';
 import 'package:akcsapp/scReens/akcs/cart.dart';
+import 'package:akcsapp/scReens/dashboard.dart';
 import 'package:akcsapp/widgets/appbar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:badges/badges.dart';
@@ -48,6 +49,7 @@ class aKcsProductDetails extends StatelessWidget {
   Dashcontroller dashcontroller = Get.put(Dashcontroller());
   @override
   Widget build(BuildContext context) {
+    dashcontroller.elevtdCondition.value = false;
     return Scaffold(
         appBar: PreferredSize(
           child: appbarakcs(),
@@ -228,110 +230,128 @@ class aKcsProductDetails extends StatelessWidget {
 
             //return Text('data');
 
-            Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Color.fromARGB(255, 238, 235, 235),
-          ),
-          height: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30.0),
-                child: Container(
-                    //padding: const EdgeInsets.only(left: 20),
-                    // margin: EdgeInsets.only(right: 50),
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.white,
-                      ),
-                    ),
-                    child: Obx(
-                      () => Badge(
-                        //position: BadgePosition.bottomStart(),
-                        animationDuration: Duration(milliseconds: 300),
+            Obx(() => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Color.fromARGB(255, 238, 235, 235),
+                  ),
+                  height: 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(left: 30.0),
+                          child: Container(
+                            //padding: const EdgeInsets.only(left: 20),
+                            // margin: EdgeInsets.only(right: 50),
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Colors.white,
+                              ),
+                            ),
+                            child: Badge(
+                              //position: BadgePosition.bottomStart(),
+                              animationDuration: Duration(milliseconds: 300),
 
-                        animationType: BadgeAnimationType.slide,
+                              animationType: BadgeAnimationType.slide,
 
-                        badgeContent: Text(
-                          cArtControLler.cartProducts.length.toString(),
-                          //cart.count.toString(),
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        child: IconButton(
-                            icon: Icon(Icons.shopping_cart),
-                            iconSize: 34,
-                            onPressed: () {
-                              Get.to(cart());
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => mycart()));
-                            }),
-                      ),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 100, right: 10),
-                child: Container(
-                    height: 50,
-                    width: 140,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Color.fromARGB(255, 17, 119, 147), // background
-                          onPrimary: Colors.white,
-                        ),
-                        onPressed: () {
-                          log('CArt');
-                          if (dashcontroller.selectdkg.value == 0.0) {
-                            Get.defaultDialog(
-                                title: 'Warning',
-                                middleText: 'Please  Select Quantity',
-                                // onConfirm: () {
-                                //   Navigator.of(context).pop();
-                                // },
-                                confirm: TextButton(
-                                    style: TextButton.styleFrom(
-                                      primary:
-                                          Color.fromARGB(255, 17, 119, 147),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK')));
-                          } else {
-                            log(productname);
-                            log(image);
+                              badgeContent: Text(
+                                cArtControLler.cartProducts.length.toString(),
+                                //cart.count.toString(),
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              child: IconButton(
+                                  icon: Icon(Icons.shopping_cart),
+                                  iconSize: 34,
+                                  onPressed: () {
+                                    Get.to(cart());
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => mycart()));
+                                  }),
+                            ),
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 100, right: 10),
+                          child: Container(
+                              height: 50,
+                              width: 140,
+                              child: dashcontroller.elevtdCondition.value ==
+                                      false
+                                  ? ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color.fromARGB(
+                                            255, 17, 119, 147), // background
+                                        onPrimary: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        log('CArt');
+                                        if (dashcontroller.selectdkg.value ==
+                                            0.0) {
+                                          Get.defaultDialog(
+                                              title: 'Warning',
+                                              middleText:
+                                                  'Please  Select Quantity',
+                                              // onConfirm: () {
+                                              //   Navigator.of(context).pop();
+                                              // },
+                                              confirm: TextButton(
+                                                  style: TextButton.styleFrom(
+                                                    primary: Color.fromARGB(
+                                                        255, 17, 119, 147),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('OK')));
+                                        } else {
+                                          log(productname);
+                                          log(image);
 
-                            log('productId' + productid.toString());
-                            log(dashcontroller.selectdkg.value.toString());
-                            CartMOdel cartMOdelAdd = CartMOdel(
-                                name: productname,
-                                image: image,
-                                price: liveprice,
-                                qty: dashcontroller.selectdkg.value,
-                                product_id: productid,
-                                total: liveprice! *
-                                    dashcontroller.selectdkg.value);
-                            cArtControLler.addProduct(cartMOdelAdd);
-                          }
-                        },
-                        child: Text(
-                          "ADD CART ".toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ))),
-              ),
-            ],
-          ),
-        ));
+                                          log('productId' +
+                                              productid.toString());
+                                          log(dashcontroller.selectdkg.value
+                                              .toString());
+                                          CartMOdel cartMOdelAdd = CartMOdel(
+                                              name: productname,
+                                              image: image,
+                                              price: liveprice,
+                                              qty: dashcontroller
+                                                  .selectdkg.value,
+                                              product_id: productid,
+                                              total: liveprice! *
+                                                  dashcontroller
+                                                      .selectdkg.value);
+                                          cArtControLler
+                                              .addProduct(cartMOdelAdd);
+                                          dashcontroller.elevtdCondition.value =
+                                              true;
+                                        }
+                                      },
+                                      child: Text(
+                                        "ADD CART ".toUpperCase(),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ))
+                                  : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color.fromARGB(
+                                            255, 17, 119, 147), // background
+                                        onPrimary: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      child: Text('BACK')))),
+                    ],
+                  ),
+                )));
   }
 }

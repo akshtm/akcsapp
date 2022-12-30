@@ -38,15 +38,19 @@ class Manageadress extends StatelessWidget {
                       width: width,
                       child: Column(
                         children: [
-                          ElevatedButton.icon(
+                          Obx(() => ElevatedButton.icon(
                               onPressed: () {
                                 _aDressController.getCurrentLocation();
 
                                 log(_aDressController.currentLocationAddress
                                     .toString());
                               },
-                              icon: Icon(Icons.refresh_rounded),
-                              label: Text('Try to Autofill')),
+                              icon: _aDressController.isloading.value == true
+                                  ? Icon(Icons.location_on_outlined)
+                                  : Icon(Icons.refresh_rounded),
+                              label: _aDressController.isloading.value == true
+                                  ? Text('Fetching....')
+                                  : Text('Try to Autofill'))),
                           TextFormField(
                             controller: _aDressController.HomeNAMeTextControl,
                             decoration:

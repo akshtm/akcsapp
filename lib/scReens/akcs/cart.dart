@@ -292,9 +292,12 @@ class _cartState extends State<cart> {
                         }
                       },
                       child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 242, 220, 19),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
                         width: width / 1.2,
                         height: height / 20,
-                        color: Color.fromARGB(255, 242, 220, 19),
                         child: Align(
                             child: Text(
                           'GO TO CHECK OUT',

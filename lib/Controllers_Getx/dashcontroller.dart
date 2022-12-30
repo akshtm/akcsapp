@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class Dashcontroller extends GetxController {
+  RxBool elevtdCondition = false.obs;
   RxInt selectdIntx = 1.obs;
   RxDouble selectdkg = 0.0.obs;
   makingphonecall() async {

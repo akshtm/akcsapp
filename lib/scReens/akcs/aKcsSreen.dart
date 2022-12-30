@@ -584,27 +584,28 @@ class AKcsScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            double priceToDouble =
+                                data.docs[index]['price'].toDouble();
+                            double pricechangeToDouble =
+                                data.docs[index]['pricechange'].toDouble();
+                            //var myInt = int.parse(data.docs[index]['product_id']);
+
+                            Get.to(aKcsProductDetails(
+                                pricechange: pricechangeToDouble,
+                                productname: data.docs[index]['product_name'],
+                                description: data.docs[index]['description'],
+                                liveprice:
+                                    data.docs[index]['liveprice'].toDouble(),
+                                image: data.docs[index]['product_image'],
+                                price: priceToDouble,
+                                productid: data.docs[index]['product_id']));
+                          });
                           // double a = data.docs[index]['price'] == null
                           //     ? 0.0
                           //     : data.docs[index]['price'].toDouble();
                           // double cc = double.parse(
                           //     data.docs[index]['price'].toString());
-
-                          double priceToDouble =
-                              data.docs[index]['price'].toDouble();
-                          double pricechangeToDouble =
-                              data.docs[index]['pricechange'].toDouble();
-                          //var myInt = int.parse(data.docs[index]['product_id']);
-
-                          Get.to(aKcsProductDetails(
-                              pricechange: pricechangeToDouble,
-                              productname: data.docs[index]['product_name'],
-                              description: data.docs[index]['description'],
-                              liveprice:
-                                  data.docs[index]['liveprice'].toDouble(),
-                              image: data.docs[index]['product_image'],
-                              price: priceToDouble,
-                              productid: data.docs[index]['product_id']));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

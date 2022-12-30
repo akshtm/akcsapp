@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class adREssSelectIOn extends StatelessWidget {
   var size, height, width;
+  bool isload = false;
   adREssSelectIOn({Key? key}) : super(key: key);
   CheckOutController _checkOutController = Get.put(CheckOutController());
 
@@ -93,7 +94,7 @@ class adREssSelectIOn extends StatelessWidget {
                                       color: _checkOutController
                                                   .selectdIntx.value ==
                                               index
-                                          ? Colors.green
+                                          ? Color.fromARGB(255, 26, 128, 156)
                                           : Colors.white,
                                       elevation: 10,
                                       shape: RoundedRectangleBorder(
@@ -154,28 +155,47 @@ class adREssSelectIOn extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: Container(
-        color: Color.fromARGB(255, 248, 245, 245),
-        height: height / 12,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(50, 20, 50, 20),
-          child: InkWell(
-            onTap: () {
-              Get.to(lottiePaymentPage());
-            },
-            child: Container(
-              // width: width / 1.2,
+      bottomSheet: Obx(() => Container(
+            color: Color.fromARGB(255, 248, 245, 245),
+            height: height / 12,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(50, 20, 50, 20),
+              child: InkWell(
+                onTap: () async {
+                  if (_checkOutController.adress.value == '') {
+                    Get.defaultDialog(
+                        title: 'Please select delivery address',
+                        middleText: 'You need to select a delivery adress',
+                        onConfirm: () {
+                          Get.back();
+                        },
+                        textConfirm: 'OK');
+                  } else {
+                    _checkOutController.isloadNxt.value = true;
+                    await Future.delayed(Duration(seconds: 1));
+                    Get.to(lottiePaymentPage());
+                    _checkOutController.isloadNxt.value = false;
+                  }
+                },
+                child: Container(
+                  // width: width / 1.2,
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 242, 220, 19),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
 
-              color: Color.fromARGB(255, 242, 220, 19),
-              child: Align(
-                  child: Text(
-                'CONTINUE',
-                style: GoogleFonts.aBeeZee(fontSize: 18),
-              )),
+                  child: Align(
+                      child: _checkOutController.isloadNxt == true
+                          ? CircularProgressIndicator(
+                              color: Color.fromARGB(255, 240, 234, 234),
+                            )
+                          : Text(
+                              'CONTINUE',
+                              style: GoogleFonts.aBeeZee(fontSize: 18),
+                            )),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

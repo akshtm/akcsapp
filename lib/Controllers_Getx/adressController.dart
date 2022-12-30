@@ -20,6 +20,7 @@ class ADressController extends GetxController {
   final pincodeTextControl = TextEditingController();
   final CItyTextControl = TextEditingController();
   final stateTextControl = TextEditingController();
+  RxBool isloading = false.obs;
 
   Future<void> addAdress_DB(AdressModel AdresAdd) async {
     log('inside addAdress_DB ');
@@ -49,6 +50,7 @@ class ADressController extends GetxController {
   }
 
   getCurrentLocation() {
+    isloading.value = true;
     Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best,
             forceAndroidLocationManager: true)
@@ -73,6 +75,7 @@ class ADressController extends GetxController {
       stateTextControl.text = place.administrativeArea!;
       pincodeTextControl.text = place.postalCode!;
       CItyTextControl.text = place.locality!;
+      isloading.value = false;
     } catch (e) {
       print(e);
     }
